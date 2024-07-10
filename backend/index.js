@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 //Creating upload Endpoint for images
 
 const upload = multer({ storage: storage });
-const port = 10000; // Replace with your actual backend port
+const port = 10000;
 
 app.post("/upload", upload.single("product"), (req, res) => {
   // Use the 'protocol' property to dynamically determine HTTP or HTTPS
