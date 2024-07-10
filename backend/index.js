@@ -40,13 +40,17 @@ const storage = multer.diskStorage({
 //Creating upload Endpoint for images
 
 const upload = multer({ storage: storage });
+const port = 10000; // Replace with your actual backend port
+
 app.post("/upload", upload.single("product"), (req, res) => {
+  // Use the 'protocol' property to dynamically determine HTTP or HTTPS
+  const protocol = req.protocol; // Will be 'http' or 'https'
+
   res.json({
     success: 1,
-    image_url: `https://shopper-backend-hwag.onrender.com/images/${req.file.filename}`,
+    image_url: `${protocol}://${req.headers.host}/images/${req.file.filename}`,
   });
 });
-
 
 app.use("/images", express.static("upload/images"));
 
