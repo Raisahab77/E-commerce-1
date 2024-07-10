@@ -1,5 +1,4 @@
 
-const port = process.env.PORT || 10000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -8,6 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 
+const port = process.env.PORT || 10000;
 app.use(express.json());
 app.use(cors());
 
@@ -40,15 +40,14 @@ const storage = multer.diskStorage({
 //Creating upload Endpoint for images
 
 const upload = multer({ storage: storage });
-// const port = 10000;
 
 app.post("/upload", upload.single("product"), (req, res) => {
-  // Use the 'protocol' property to dynamically determine HTTP or HTTPS
-  const protocol = req.protocol; // Will be 'http' or 'https'
+  const protocol = req.protocol; // 'http' or 'https'
+  const imageUrl = `${protocol}://${req.headers.host}/images/${req.file.filename}`;
 
   res.json({
     success: 1,
-    image_url: `${protocol}://${req.headers.host}/images/${req.file.filename}`,
+    image_url: imageUrl,
   });
 });
 
