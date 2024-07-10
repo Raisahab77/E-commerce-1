@@ -68,18 +68,22 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  const getTotalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = all_product.find(
-          (product) => product.id === Number(item)
-        );
+ const getTotalCartAmount = () => {
+  let totalAmount = 0;
+  for (const item in cartItems) {
+    if (cartItems[item] > 0) {
+      let itemInfo = all_product.find(
+        (product) => product.id === Number(item)
+      );
+      if (itemInfo) {  // Check if itemInfo is defined
         totalAmount += cartItems[item] * itemInfo.new_price;
+      } else {
+        console.warn(`Product with id ${item} not found in all_product array.`);
       }
     }
-    return totalAmount;
-  };
+  }
+  return totalAmount;
+};
 
   const getTotalCartItems = () => {
     let totalItem = 0;
