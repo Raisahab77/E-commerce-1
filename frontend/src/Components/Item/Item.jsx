@@ -1,11 +1,16 @@
-import React from 'react'
-import './Item.css'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import './Item.css';
+import { Link } from 'react-router-dom';
 
 const Item = (props) => {
+  // Ensure that the image URL uses HTTPS
+  const imageUrl = props.image.replace(/^http:\/\/localhost:10000/, 'https://shopper-backend-hwag.onrender.com');
+
   return (
     <div className='item'>
-      <Link to={`/product/${props.id}`}><img onClick={window.scrollTo(0,0)} src={props.image} alt="" /></Link>
+      <Link to={`/product/${props.id}`} onClick={() => window.scrollTo(0, 0)}>
+        <img src={imageUrl} alt="" />
+      </Link>
       <p>{props.name}</p>
       <div className="item-prices">
         <div className="item-price-new">
@@ -16,7 +21,7 @@ const Item = (props) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Item
+export default Item;
