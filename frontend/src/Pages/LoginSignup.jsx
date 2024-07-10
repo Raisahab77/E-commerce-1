@@ -17,7 +17,7 @@ const LoginSignup = () => {
   const login = async () => {
     console.log("Login Func",formData);
     let responseData;
-    await fetch('http://localhost:4000/login',{
+    await fetch('https://shopper-backend-hwag.onrender.com/login',{
       method: 'POST',
       headers:{
         Accept: 'application/form-data',
@@ -39,7 +39,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log("SignUp Func",formData);
     let responseData;
-    await fetch('http://localhost:4000/signup',{
+    await fetch('https://shopper-backend-hwag.onrender.com/signup',{
       method: 'POST',
       headers:{
         Accept: 'application/form-data',
