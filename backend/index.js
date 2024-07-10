@@ -173,6 +173,7 @@ app.get("/popularinwomen", async (req, res) => {
 });
 
 // endpoint for getting womens products data
+
 app.post("/relatedproducts", async (req, res) => {
   console.log("Related Products");
   const {category} = req.body;
