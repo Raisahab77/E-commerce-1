@@ -28,7 +28,7 @@ const AddProduct = () => {
     formData.append("product", image);
 
     try {
-      const uploadResponse = await fetch("https://shopper-backend-hwag.onrender.com/upload", {
+      const uploadResponse = await fetch("https://shopper-backend-hwag.onrender.com/", {
         method: "POST",
         headers: {
           Accept: "application/json",
