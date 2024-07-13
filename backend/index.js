@@ -43,7 +43,7 @@ const upload = multer({ storage: storage });
 
 app.post("/upload", upload.single("product"), (req, res) => {
   const protocol = req.protocol; // 'http' or 'https'
-  const imageUrl = `https://shopper-backend-hwag.onrender.com/upload/images/${req.file.filename}`;
+  const imageUrl = `https://shopper-backend-hwag.onrender.com/images/${req.file.filename}`;
 
   res.json({
     success: 1,
