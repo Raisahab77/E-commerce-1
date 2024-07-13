@@ -51,7 +51,7 @@ app.post("/upload", upload.single("product"), (req, res) => {
   });
 });
 
-app.use("/images", express.static("upload/images"));
+app.use('/images', express.static(path.join(__dirname, 'upload/images')));
 
 // Creating middleware to fetch user from token
 const fetchUser = async(req,res,next) =>{
