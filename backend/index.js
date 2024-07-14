@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const uploadFile = require("./utils/file-uploader");
 
 const port = process.env.PORT || 10000;
 app.use(express.json());
@@ -25,33 +26,47 @@ app.get("/", (req, res) => {
   res.send("Express App is Running");
 });
 
+
+var uploader = multer({
+    storage:multer.diskStorage({}),
+    limits:{ fileSize:50000 }
+});
+
 // Image Storage Engine
 
-const storage = multer.diskStorage({
-  destination: "./upload/images",
-  filename: (req, file, cb) => {
-    return cb(
-      null,
-      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
-    );
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: "./upload/images",
+//   filename: (req, file, cb) => {
+//     return cb(
+//       null,
+//       `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+//     );
+//   },
+// });
 
 //Creating upload Endpoint for images
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-app.post("/upload", upload.single("product"), (req, res) => {
-  const protocol = req.protocol; // 'http' or 'https'
-  const imageUrl = `https://shopper-backend-hwag.onrender.com/upload/images/${req.file.filename}`;
+app.post("/upload", uploader.single("product"), async (req, res) => {
+  // const protocol = req.protocol; // 'http' or 'https'
+  // const imageUrl = `https://shopper-backend-hwag.onrender.com/upload/images/${req.file.filename}`;
 
+  // res.json({
+  //   success: 1,
+  //   image_url: imageUrl,
+  // });
+  let img_url;
+  if(req.file){
+      img_url = await uploadFile(req.file.path);
+  }
   res.json({
     success: 1,
-    image_url: imageUrl,
+    image_url: img_url,
   });
 });
 
-app.use("/images", express.static("upload/images"));
+app.use('/images', express.static(path.join(__dirname, 'upload/images')));
 
 // Creating middleware to fetch user from token
 const fetchUser = async(req,res,next) =>{
